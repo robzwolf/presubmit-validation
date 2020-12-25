@@ -1,0 +1,206 @@
+<html>
+<head>
+<script
+    src="https://code.jquery.com/jquery-1.12.4.js">
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<h1>Sign Up</h1>
+
+  <form method="POST" id="myform" name="form" action="signup.php">
+    <input type="text" id="name1" name="name1" required="" placeholder="Full Name">
+    <input type="text" id="username1" name="username1" required placeholder="Username">
+    <br>
+    <br>
+    <input type="password" id="password1" placeholder="Password" name="password1" required>
+    <br>
+    <br>
+    <input type="submit" value="Submit" id="submit">
+  </form>
+
+<div id="message" class="message">
+  <h2>Password <b>must</b> contain the following:</h2>
+  <h1 id="letter" class="invalid">A <b>lowercase</b> letter</h1>
+  <h1 id="capital" class="invalid">A <b>capital (uppercase)</b> letter</h1>
+  <h1 id="number" class="invalid">A <b>number</b></h1>
+  <h1 id="length" class="invalid">Minimum <b>8 characters</b></h1>
+  <h1 id="character" class="invalid">Minimum <b>1 special character (!@#$%^&*)</b></h1>
+</div>
+</body>			
+</html>
+
+
+
+<style>
+h1 {
+    color: rgb(228, 185, 107);
+    font-family: 'Poppins', sans-serif;
+    font-size: 5vw;
+    text-align: center;
+}
+body {
+    background-color: black;
+}
+/* Style all input fields */
+input {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(228, 185, 107);
+    color: black;
+    font-size: 3vw;
+    padding: 1vw;
+    border: 0.5vw solid rgb(134, 134, 134);
+    cursor: auto;
+}
+#submit {
+    cursor: pointer;
+}
+#submit:hover {
+    background-color: black;
+    color: rgb(228, 185, 107);
+    border: 0.5vw solid rgb(228, 185, 107);
+}
+#username1 {
+    margin-left: 2vw;
+}
+/* Style the submit button */
+form {
+    text-align: center;
+    margin-top: 3vw;
+}
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  color: rgb(228, 185, 107);
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: rgb(0, 172, 0);
+}
+
+.valid:before {
+  position: relative;
+  left: -5vw;
+}
+
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: rgb(255, 72, 72);
+}
+
+.invalid:before {
+  position: relative;
+}
+h2 {
+    font-size: 2vw;
+    text-decoration: underline;
+}
+.message h1 {
+    margin-left: 2vw;
+    font-size: 2vw;
+    text-align: left;
+    padding: -1vw;
+}
+#message h1 {
+    position: absolute;
+}
+#letter {
+    top: 2vw;
+}
+#capital {
+    top: 2vw;
+    right: 2vw;
+}
+#character {
+    top: 5vw;
+    right: 2vw;
+}
+#number {
+    top: 3vw;
+    left: 35vw;
+}
+</style>
+
+<script>
+var myInput = document.getElementById("password1");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+var character = document.getElementById("character");
+
+// When the user clicks on the password field, show the message box
+myInput.addEventListener("focus", function() {
+  document.getElementById("message").style.display = "block";
+});
+
+// When the user clicks outside of the password field, hide the message box
+myInput.addEventListener("blur", function() {
+  document.getElementById("message").style.display = "none";
+});
+
+// When the user starts to type something inside the password field
+myInput.addEventListener("keyup", function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {  
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+  }
+  
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {  
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {  
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+  
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+
+  var special = /[!@#$%^&*]/g;
+  if(myInput.value.match(special)) {  
+    character.classList.remove("invalid");
+    character.classList.add("valid");
+  } else {
+    character.classList.remove("valid");
+    character.classList.add("invalid");
+  }
+});
+
+document.getElementById("myform").addEventListener("submit", function(e){
+  if(letter.classList.item(0) == 'valid' && capital.classList.item(0) == 'valid' && number.classList.item(0) == 'valid' && length.classList.item(0) == 'valid' && character.classList.item(0) == 'valid') {
+    alert("Validation passed");
+  } else {
+    alert("Validation failed");
+    e.preventDefault();
+  }
+});
+</script>
